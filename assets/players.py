@@ -19,6 +19,7 @@ def create_player(player_id):
 		"hp": 100,
 		"help": 10, 
 		"attacks" : 0,
+		"win": 0,
 		"attacked": 0,
 		"defence": 0,
 		"getting_attacked": False

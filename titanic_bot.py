@@ -1,6 +1,10 @@
+from venv import create
 from discord.ext import commands
+import discord
 import asyncio, sys, os
 from dotenv import load_dotenv
+
+from assets.player_info import create_player
 load_dotenv()
 
 class CustomHelpCommand(commands.HelpCommand):
@@ -17,3 +21,32 @@ class CustomHelpCommand(commands.HelpCommand):
 
 	async def send_command_help(self, command):	
 		await self.get_destination().send(help())
+
+intents = discord.Intents.default()
+intents.members = True
+bot = commands.Bot(intents=intents, command_prefix=".", help_command=CustomHelpCommand())
+
+@bot.event
+async def on_ready():
+	print(f"{bot.user} is ready and has started running")
+
+@bot.event
+async def on_message(msg):
+    if msg.author == bot.user:
+        return
+    await bot.process_commands(msg)
+
+# ------- WORKING TEST ------- #
+@bot.command(name='ready')
+async def ready(ctx):
+    await ctx.send(f"{bot.user} is ready and running!")
+
+@bot.command(name='players')
+async def initiate_players(ctx):
+	for guild in bot.guilds:
+		for member in guild.members:
+			create_player(member.id)
+			
+	await ctx.send("All users are now in the database!")
+
+bot.run(os.getenv("TOKEN"))

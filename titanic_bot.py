@@ -1,4 +1,3 @@
-from venv import create
 from discord.ext import commands
 import discord
 import asyncio, sys, os, time
@@ -8,7 +7,7 @@ from assets.players import *
 from assets.wars import *
 load_dotenv()
 
-war_channel = 11111111111111
+war_channel = 957400070418997292
 
 def war_checkup():
 	while True:
@@ -53,7 +52,7 @@ async def on_message(msg):
     await bot.process_commands(msg)
 
 # ------- WORKING TEST ------- #
-@bot.command(name='ready')
+@bot.command(name='ready') 
 async def ready(ctx):
     await ctx.send(f"{bot.user} is ready and running!")
 

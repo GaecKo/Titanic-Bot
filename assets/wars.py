@@ -1,6 +1,6 @@
 from json import load, dump
-import players
 from datetime import datetime
+import assets.players 
 
 def access_war():
     with open("assets/data/wars.json", 'r') as f:

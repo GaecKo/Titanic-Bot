@@ -1,11 +1,27 @@
 from venv import create
 from discord.ext import commands
 import discord
-import asyncio, sys, os
+import asyncio, sys, os, time
 from dotenv import load_dotenv
 
-from assets.player_info import create_player
+from assets.players import *
+from assets.wars import *
 load_dotenv()
+
+war_channel = 11111111111111
+
+def war_checkup():
+	while True:
+		if is_there_war():
+			time.sleep(2)
+			attributes = someone_dead()
+			if attributes[0] == False:
+				continue
+			else:
+				channel = bot.get_channel(war_channel)
+				channel.send(get_war_info(attributes[1]))
+		
+
 
 class CustomHelpCommand(commands.HelpCommand):
 	def __init__(self):
